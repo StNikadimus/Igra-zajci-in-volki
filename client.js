@@ -38,21 +38,45 @@ let latestState = null;  // last `state` message
 let moveQueue = [];      // queued directions from keypresses, consumed as ticks demand them
 let tileSize = 30;
 let img_trava = document.createElement("img");
-img_trava.src = "images/Grass1.png"
+img_trava.src = "images/Grass.png"
 let img_bush = document.createElement("img");
 img_bush.src = "images/Bush.png"
-let image_voda = document.createElement("img");
-image_voda.src = "images/water.png"; 
+let image_water = document.createElement("img");
+image_water.src = "images/water.png"; 
+
 let image_stone = document.createElement("img");
 image_stone.src = "images/stone.png"; 
+
+let image_travazrozam = document.createElement("img");
+image_travazrozam.src = "images/grasswithflowers.png";
+
+let image_trava1 = document.createElement("img");
+image_trava1.src = "images/Grass1.png";
 let image_trava2 = document.createElement("img");
-image_trava2.src = "images/grasswithflowers.png"; 
+image_trava2.src = "images/Grass2.png";
+let image_trava3 = document.createElement("img");
+image_trava3.src = "images/Grass3.png";  
+let image_voda = document.createElement("img");
+image_voda.src = "images/voda.png"; 
+let image_voda1 = document.createElement("img");
+image_voda1.src = "images/voda1.png";
+let image_voda2 = document.createElement("img");
+image_voda2.src = "images/voda2.png";
+let image_voda3 = document.createElement("img");
+image_voda3.src = "images/voda3.png";
+let image_voda4 = document.createElement("img");
+image_voda4.src = "images/voda4.png";
+
+
+
+let vrsta_trave = [img_trava, image_trava1, image_trava2, image_trava3];
+let vrsta_vode = [image_voda, image_water, image_voda1, image_voda2, image_voda3, image_voda4]
 let images = {
   0: img_trava,
   1: img_bush,
   2: image_voda,
   3: image_stone,
-  4: image_trava2,
+  4: image_travazrozam,
 }
 
 
@@ -172,7 +196,7 @@ function render(msg) {
       ctx.fillStyle = TILE_COLORS[t] || '#000';
       ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
 
-      ctx.drawImage(images[t], x * tileSize, y * tileSize, tileSize, tileSize);
+      ctx.drawImage(getTileImage(t), x * tileSize, y * tileSize, tileSize, tileSize);
 
       /*
       if(t==2){
@@ -223,4 +247,12 @@ function render(msg) {
     ctx.textAlign = 'center';
     ctx.fillText(e.kind === 'wolf' ? '🐺' : '🐇', cx, cy + tileSize * 0.1);
   }
+}
+
+function getTileImage(tile){
+  if(tile == 2)
+    return vrsta_vode[Math.floor(Math.random()*vrsta_vode.length)];
+  
+  return images[tile];
+
 }
