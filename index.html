@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Rabbits &amp; Wolves</title>
+<style>
+  :root {
+    --grass: #bfe6a8;
+    --bush: #4c8c3d;
+    --water: #6ab7e8;
+    --rock: #8a8a8a;
+    --clover: #ffd27a;
+    --rabbit: #3b3b3b;
+    --wolf: #b0281f;
+    --panel-bg: #1f2430;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #0f1115;
+    color: #e8e8e8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+  h1 { font-size: 1.1rem; font-weight: 600; margin: 14px 0 4px; letter-spacing: 0.02em; }
+  #connectPanel {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0 16px;
+  }
+  #connectPanel input {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #3a3f4b;
+    background: #171a21;
+    color: #fff;
+    font-size: 0.95rem;
+  }
+  #connectPanel button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: #4c8c3d;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #connectPanel button:hover { background: #5aa348; }
+  #wrap { display: flex; gap: 16px; align-items: flex-start; }
+  #hud {
+    background: var(--panel-bg);
+    border-radius: 10px;
+    padding: 14px 16px;
+    min-width: 200px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  #hud .label { color: #9aa0ab; }
+  #energyBarOuter {
+    width: 100%;
+    height: 10px;
+    background: #333;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  #energyBarInner {
+    height: 100%;
+    background: linear-gradient(90deg, #ff5252, #ffd27a, #4caf50);
+  }
+  #log {
+    margin-top: 10px;
+    max-height: 220px;
+    overflow-y: auto;
+    font-size: 0.78rem;
+    color: #b8bdc7;
+  }
+  #log div { padding: 1px 0; }
+  canvas { background: #1a1d24; border-radius: 8px; display: block; }
+  #hint { margin-top: 10px; font-size: 0.8rem; color: #7c8391; text-align: center; }
+  #status { position: fixed; top: 10px; right: 14px; font-size: 0.8rem; color: #7c8391; }
+</style>
+</head>
+<body>
+  <h1>🐇 Rabbits &amp; Wolves 🐺</h1>
+  <div id="status">disconnected</div>
+
+  <div id="connectPanel">
+    <input id="nameInput" type="text" placeholder="Your display name" maxlength="24" />
+    <input id="urlInput" type="text" placeholder="ws://localhost:8080" value="ws://localhost:8080" />
+    <button id="connectBtn">Join</button>
+  </div>
+
+  <div id="wrap">
+    <canvas id="board" width="600" height="420"></canvas>
+    <div id="hud">
+      <div><span class="label">Name:</span> <span id="hName">-</span></div>
+      <div><span class="label">Role:</span> <span id="hKind">-</span></div>
+      <div><span class="label">Tick:</span> <span id="hTick">-</span></div>
+      <div><span class="label">Energy:</span> <span id="hEnergy">-</span></div>
+      <div id="energyBarOuter"><div id="energyBarInner" style="width:100%"></div></div>
+      <div><span class="label">Status:</span> <span id="hAlive">-</span></div>
+      <div><span class="label">Moves this tick:</span> <span id="hMovesAllowed">-</span></div>
+      <div id="log"></div>
+    </div>
+  </div>
+
+  <div id="hint">Arrow keys / WASD to move. Move input is queued and sent for each tick automatically.</div>
+
+  <script src="client.js"></script>
+</body>
+</html>

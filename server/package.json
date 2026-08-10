@@ -1,0 +1,13 @@
+{
+  "name": "rabbits-and-wolves-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tick-based WebSocket game server for Rabbits & Wolves",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
