@@ -37,6 +37,25 @@ let me = { id: null, kind: null, displayName: null };
 let latestState = null;  // last `state` message
 let moveQueue = [];      // queued directions from keypresses, consumed as ticks demand them
 let tileSize = 30;
+let img_trava = document.createElement("img");
+img_trava.src = "images/Grass1.png"
+let img_bush = document.createElement("img");
+img_bush.src = "images/Bush.png"
+let image_voda = document.createElement("img");
+image_voda.src = "images/water.png"; 
+let image_stone = document.createElement("img");
+image_stone.src = "images/stone.png"; 
+let image_trava2 = document.createElement("img");
+image_trava2.src = "images/grasswithflowers.png"; 
+let images = {
+  0: img_trava,
+  1: img_bush,
+  2: image_voda,
+  3: image_stone,
+  4: image_trava2,
+}
+
+
 
 document.getElementById('connectBtn').addEventListener('click', connect);
 
@@ -152,6 +171,14 @@ function render(msg) {
       const t = world.tiles[y][x];
       ctx.fillStyle = TILE_COLORS[t] || '#000';
       ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
+
+      ctx.drawImage(images[t], x * tileSize, y * tileSize, tileSize, tileSize);
+
+      /*
+      if(t==2){
+        ctx.drawImage(image_voda, x * tileSize, y * tileSize, tileSize, tileSize);
+      }
+        */
     }
   }
 
