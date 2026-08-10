@@ -90,7 +90,7 @@
 
   <div id="connectPanel">
     <input id="nameInput" type="text" placeholder="Your display name" maxlength="24" />
-    <input id="urlInput" type="text" placeholder="ws://localhost:8080" value="ws://localhost:8080" />
+    <input id="urlInput" type="text" placeholder="ws://10.0.20.173:8080" value="ws://10.0.20.173:8080" />
     <button id="connectBtn">Join</button>
   </div>
 
@@ -99,16 +99,13 @@
     <div id="hud">
       <div><span class="label">Name:</span> <span id="hName">-</span></div>
       <div><span class="label">Role:</span> <span id="hKind">-</span></div>
-      <div><span class="label">Tick:</span> <span id="hTick">-</span></div>
       <div><span class="label">Energy:</span> <span id="hEnergy">-</span></div>
       <div id="energyBarOuter"><div id="energyBarInner" style="width:100%"></div></div>
       <div><span class="label">Status:</span> <span id="hAlive">-</span></div>
       <div><span class="label">Moves this tick:</span> <span id="hMovesAllowed">-</span></div>
       <div id="log"></div>
     </div>
-  </div>
-
-  <div id="hint">Arrow keys / WASD to move. Move input is queued and sent for each tick automatically.</div>
+  </div>  
 
   <script src="client.js"></script>
 </body>

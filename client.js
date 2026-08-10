@@ -142,7 +142,6 @@ function handleStateTick(msg) {
   }
   ws.send(JSON.stringify({ type: 'decision', tick: msg.tick, moves }));
 
-  hTick.textContent = msg.tick;
   hMovesAllowed.textContent = allowed;
   hAlive.textContent = msg.you.alive ? 'alive' : `dead (respawning at tick ${msg.you.respawnAtTick})`;
 
