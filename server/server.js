@@ -92,7 +92,7 @@ function send(ws, msg) {
 // ---------------------------------------------------------------------------
 // WebSocket wiring
 // ---------------------------------------------------------------------------
-const wss = new WebSocket.Server({ port: PORT });
+const wss = new WebSocket.Server({ host: "0.0.0.0", port: PORT });
 
 wss.on('connection', (ws) => {
   let player = null;
