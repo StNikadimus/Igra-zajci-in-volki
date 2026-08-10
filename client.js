@@ -151,27 +151,8 @@ function handleStateTick(msg) {
     hEnergy.textContent = `${self.energy} / ${world.maxEnergy}`;
     energyBarInner.style.width = `${Math.max(0, (self.energy / world.maxEnergy) * 100)}%`;
   }
-
-  for (const ev of msg.events || []) {
-    logEvent(ev);
-  }
 }
 
-function logEvent(ev) {
-  let line = '';
-  switch (ev.type) {
-    case 'cloverEaten': line = `🍀 clover eaten at (${ev.x},${ev.y})`; break;
-    case 'rabbitEaten': line = `🐺 rabbit ${shortId(ev.rabbit)} caught by wolf ${shortId(ev.wolf)}`; break;
-    case 'entityStarved': line = `💀 ${ev.kind} ${shortId(ev.id)} starved`; break;
-    case 'entityRespawned': line = `✨ ${ev.kind} ${shortId(ev.id)} respawned`; break;
-    case 'cloverRespawned': line = `🍀 clover regrew at (${ev.x},${ev.y})`; break;
-    default: return;
-  }
-  const div = document.createElement('div');
-  div.textContent = line;
-  logEl.prepend(div);
-  while (logEl.childElementCount > 40) logEl.removeChild(logEl.lastChild);
-}
 
 function shortId(id) {
   return id ? id.slice(-4) : '????';
