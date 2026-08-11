@@ -216,16 +216,16 @@ function render(msg) {
     ctx.fill();
 
     if (e.self) {
-      ctx.strokeStyle = '#ffd27a';
+      ctx.strokeStyle = 'rgba(255, 211, 122, 0)';
       ctx.lineWidth = 2;
       ctx.stroke();
     }
 
     // energy pip
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
-    ctx.font = `${Math.floor(tileSize * 0.28)}px sans-serif`;
+    ctx.font = `${Math.floor(tileSize * 1.75)}px sans-serif`;
     ctx.textAlign = 'center';
-    ctx.fillText(e.kind === 'wolf' ? '🐺' : '🐇', cx, cy + tileSize * 0.1);
+    ctx.fillText(e.kind === 'wolf' ? '🐺' : '🐰', cx, cy + tileSize * 0.11);
   }
 }
 
