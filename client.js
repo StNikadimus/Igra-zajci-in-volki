@@ -66,6 +66,9 @@ let image_voda4 = document.createElement("img");
 image_voda4.src = "images/voda4.png";
 let bear_trap = document.createElement("img");
 bear_trap.src = "images/bear_trap.png";
+let luknja = document.createElement("img");
+luknja.src = "images/luknja.png";
+
 
 
 
@@ -78,6 +81,7 @@ let images = {
   3: image_stone,
   4: image_travazrozam,
   5: bear_trap,
+  6: luknja,
 }
 
 

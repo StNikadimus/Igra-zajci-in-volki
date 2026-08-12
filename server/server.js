@@ -39,6 +39,7 @@ const cloverSpots = map.findTilesOfType(map.TILE.CLOVER).map((pos) => ({
   available: true,
   respawnAtTick: null,
 }));
+const rabbitHoles = map.findTilesOfType(map.TILE.rabbithole);
 
 const spawnableTiles = map.findSpawnableTiles();
 
@@ -81,6 +82,9 @@ class Player {
     this.pendingMovesTick = -1;
     this.connected = true;
     this.respawnAtTick = null;
+    this.stuckUntilTick = null;
+    this.trapCooldownUntilTick = null;
+    this.holeCooldownUntilTick = null;   // <-- novo
   }
 }
 
@@ -265,7 +269,19 @@ function resolveTick(movesAllowedMap) {
         }
       }
     }
-
+    // rabbit hole teleport
+    for (const p of living()) {
+      const onHole = rabbitHoles.some((h) => h.x === p.x && h.y === p.y);
+      const cooldownActive = p.holeCooldownUntilTick && p.holeCooldownUntilTick > tick;
+      if (onHole && !cooldownActive) {
+        const others = rabbitHoles.filter((h) => !(h.x === p.x && h.y === p.y));
+        const dest = others[Math.floor(Math.random() * others.length)];
+        p.x = dest.x;
+        p.y = dest.y;
+        p.holeCooldownUntilTick = tick + 5; // premor, da lahko odide, preden spet lahko teleportira
+        events.push({ type: 'teleported', id: p.id, x: p.x, y: p.y });
+      }
+    }
     // clover
     for (const rabbit of living().filter((p) => p.kind === 'rabbit')) {
       const spot = cloverSpots.find((c) => c.x === rabbit.x && c.y === rabbit.y && c.available);
