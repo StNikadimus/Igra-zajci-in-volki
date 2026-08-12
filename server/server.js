@@ -299,7 +299,7 @@ function resolveTick(movesAllowedMap) {
       const onTrap = map.tileAt(p.x, p.y) === map.TILE.beartrap;
       const cooldownActive = p.trapCooldownUntilTick && p.trapCooldownUntilTick > tick;
       if (onTrap && !cooldownActive) {
-        p.stuckUntilTick = tick + 5;
+        p.stuckUntilTick = tick + 75
         p.trapCooldownUntilTick = tick + 5 + 10; // 5 tickov ujetosti + 10 tickov premora
         events.push({ type: 'trapped', id: p.id, until: p.stuckUntilTick });
       }
