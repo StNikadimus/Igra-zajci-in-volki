@@ -1,3 +1,8 @@
+# Version
+  2.0.5
+
+
+
 # Rabbits & Wolves
 
 Reference implementation of the protocol described in `PROTOCOL.md`.

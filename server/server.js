@@ -80,6 +80,7 @@ class Player {
     this.pendingMoves = null; // moves array received for the current tick
     this.pendingMovesTick = -1;
     this.connected = true;
+    this.respawnAtTick = null;
   }
 }
 
@@ -178,7 +179,6 @@ function movesAllowedFor(player) {
   if (player.kind === 'wolf' && tick % WOLF_DOUBLE_MOVE_EVERY === 0) return 2;
   return 1;
 }
-
 function broadcastState(movesAllowedMap, events) {
   for (const viewer of players.values()) {
     if (!viewer.connected) continue;
@@ -243,6 +243,12 @@ function resolveTick(movesAllowedMap) {
     for (const p of living()) {
       const allowed = movesAllowedMap.get(p.id) || 1;
       if (step >= allowed) continue;
+
+      // če je igralec ujet v pasti, ignoriraj njegovo potezo
+      if (p.stuckUntilTick && p.stuckUntilTick > tick) {
+        continue; // preskoči premik -- ostane na mestu
+      }
+
       const moves = p.pendingMovesTick === tick ? p.pendingMoves : [];
       const dir = moves && moves[step] ? moves[step] : 'stay';
       tryMove(p, dir);
@@ -270,8 +276,19 @@ function resolveTick(movesAllowedMap) {
         events.push({ type: 'cloverEaten', by: rabbit.id, x: spot.x, y: spot.y });
       }
     }
-  }
 
+    // bear trap
+    // bear trap
+    for (const p of living()) {
+      const onTrap = map.tileAt(p.x, p.y) === map.TILE.beartrap;
+      const cooldownActive = p.trapCooldownUntilTick && p.trapCooldownUntilTick > tick;
+      if (onTrap && !cooldownActive) {
+        p.stuckUntilTick = tick + 5;
+        p.trapCooldownUntilTick = tick + 5 + 10; // 5 tickov ujetosti + 10 tickov premora
+        events.push({ type: 'trapped', id: p.id, until: p.stuckUntilTick });
+      }
+    }
+  }
   // -- upkeep: energy decay + starvation, once per full tick --
   for (const p of living()) {
     p.energy -= ENERGY_DECAY_PER_TICK;
@@ -282,7 +299,6 @@ function resolveTick(movesAllowedMap) {
       events.push({ type: 'entityRespawnScheduled', id: p.id, atTick: p.respawnAtTick });
     }
   }
-
   // -- respawns --
   for (const p of players.values()) {
     if (!p.alive && p.respawnAtTick !== null && tick >= p.respawnAtTick) {
@@ -302,7 +318,6 @@ function resolveTick(movesAllowedMap) {
       events.push({ type: 'cloverRespawned', x: c.x, y: c.y });
     }
   }
-
   // clear this tick's decisions
   for (const p of players.values()) {
     p.pendingMoves = null;

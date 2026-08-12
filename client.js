@@ -37,19 +37,17 @@ let me = { id: null, kind: null, displayName: null };
 let latestState = null;  // last `state` message
 let moveQueue = [];      // queued directions from keypresses, consumed as ticks demand them
 let tileSize = 30;
+//textures
 let img_trava = document.createElement("img");
 img_trava.src = "images/Grass.png"
 let img_bush = document.createElement("img");
 img_bush.src = "images/Bush.png"
 let image_water = document.createElement("img");
 image_water.src = "images/water.png"; 
-
 let image_stone = document.createElement("img");
 image_stone.src = "images/stone.png"; 
-
 let image_travazrozam = document.createElement("img");
 image_travazrozam.src = "images/grasswithflowers.png";
-
 let image_trava1 = document.createElement("img");
 image_trava1.src = "images/Grass1.png";
 let image_trava2 = document.createElement("img");
@@ -66,6 +64,8 @@ let image_voda3 = document.createElement("img");
 image_voda3.src = "images/voda3.png";
 let image_voda4 = document.createElement("img");
 image_voda4.src = "images/voda4.png";
+let bear_trap = document.createElement("img");
+bear_trap.src = "images/bear_trap.png";
 
 
 
@@ -77,6 +77,7 @@ let images = {
   2: image_voda,
   3: image_stone,
   4: image_travazrozam,
+  5: bear_trap,
 }
 
 
@@ -198,7 +199,7 @@ function render(msg) {
   }
 
   // grid lines (subtle)
-  ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+  ctx.strokeStyle = 'rgba(101, 92, 88, 0)';
   for (let x = 0; x <= world.width; x++) {
     ctx.beginPath(); ctx.moveTo(x * tileSize, 0); ctx.lineTo(x * tileSize, canvas.height); ctx.stroke();
   }
