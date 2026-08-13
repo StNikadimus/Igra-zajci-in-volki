@@ -37,11 +37,12 @@ let me = { id: null, kind: null, displayName: null };
 let latestState = null;  // last `state` message
 let moveQueue = [];      // queued directions from keypresses, consumed as ticks demand them
 let tileSize = 30;
-//textures
+
+// textures
 let img_trava = document.createElement("img");
-img_trava.src = "images/Grass.png"
+img_trava.src = "images/Grass.png";
 let img_bush = document.createElement("img");
-img_bush.src = "images/Bush.png"
+img_bush.src = "images/Bush.png";
 let image_water = document.createElement("img");
 image_water.src = "images/water.png"; 
 let image_stone = document.createElement("img");
@@ -69,11 +70,8 @@ bear_trap.src = "images/bear_trap.png";
 let luknja = document.createElement("img");
 luknja.src = "images/luknja.png";
 
-
-
-
 let vrsta_trave = [img_trava, image_trava1, image_trava2, image_trava3];
-let vrsta_vode = [image_voda, image_water, image_voda1, image_voda2, image_voda3, image_voda4]
+let vrsta_vode = [image_voda, image_water, image_voda1, image_voda2, image_voda3, image_voda4];
 let images = {
   0: img_trava,
   1: img_bush,
@@ -82,20 +80,19 @@ let images = {
   4: image_travazrozam,
   5: bear_trap,
   6: luknja,
-}
-
-
+};
 
 document.getElementById('connectBtn').addEventListener('click', connect);
 
 function connect() {
   const name = document.getElementById('nameInput').value || 'Player';
   const url = document.getElementById('urlInput').value || 'ws://localhost:8080';
+  const selectedMap = document.getElementById('mapSelect').value || 'default';
 
   ws = new WebSocket(url);
   ws.addEventListener('open', () => {
     statusEl.textContent = 'connected — saying hello…';
-    ws.send(JSON.stringify({ type: 'hello', displayName: name }));
+    ws.send(JSON.stringify({ type: 'hello', displayName: name, requestedMap: selectedMap }));
   });
   ws.addEventListener('message', onMessage);
   ws.addEventListener('close', () => { statusEl.textContent = 'disconnected'; });
@@ -157,7 +154,6 @@ function handleStateTick(msg) {
   }
 }
 
-
 function shortId(id) {
   return id ? id.slice(-4) : '????';
 }
@@ -182,12 +178,6 @@ function render(msg) {
       ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
 
       ctx.drawImage(getTileImage(t), x * tileSize, y * tileSize, tileSize, tileSize);
-
-      /*
-      if(t==2){
-        ctx.drawImage(image_voda, x * tileSize, y * tileSize, tileSize, tileSize);
-      }
-        */
     }
   }
 
@@ -239,5 +229,4 @@ function getTileImage(tile){
     return vrsta_vode[Math.floor(Math.random()*vrsta_vode.length)];
   
   return images[tile];
-
 }

@@ -31,7 +31,7 @@
     gap: 8px;
     margin: 10px 0 16px;
   }
-  #connectPanel input {
+  #connectPanel input, #connectPanel select {
     padding: 8px 10px;
     border-radius: 6px;
     border: 1px solid #3a3f4b;
@@ -91,6 +91,11 @@
   <div id="connectPanel">
     <input id="nameInput" type="text" placeholder="Your display name" maxlength="24" />
     <input id="urlInput" type="text" placeholder="ws://10.0.20.173:8080" value="ws://10.0.20.173:8080" />
+    <select id="mapSelect">
+      <option value="default">Privzeta mapa</option>
+      <option value="small">Mala mapa</option>
+      <option value="arena">Arena</option>
+    </select>
     <button id="connectBtn">Join</button>
   </div>
 
