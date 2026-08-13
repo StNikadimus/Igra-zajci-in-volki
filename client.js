@@ -218,11 +218,29 @@ function render(msg) {
       ctx.stroke();
     }
 
-    // energy pip
+        // energy pip
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
     ctx.font = `${Math.floor(tileSize * 1.75)}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText(e.kind === 'wolf' ? '🐺' : '🐰', cx, cy + tileSize * 0.11);
+
+    // floating name label above the player (drawn after the icon so it appears on top)
+    (function(){
+      const name = e.displayName || e.name || (e.self ? me.displayName : (e.id ? shortId(e.id) : ''));
+      if (!name) return;
+      const fontSize = Math.max(10, Math.floor(tileSize * 0.36));
+      ctx.font = `${fontSize}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'bottom';
+      // outline for readability
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+      ctx.strokeText(name, cx, cy - tileSize );
+      ctx.fillStyle = 'rgba(255,255,255,0.95)';
+      ctx.fillText(name, cx, cy - tileSize );
+      // restore defaults used elsewhere
+      ctx.textBaseline = 'alphabetic';
+    })();
   }
 }
 
