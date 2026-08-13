@@ -278,7 +278,7 @@ function resolveTick(movesAllowedMap) {
         const dest = others[Math.floor(Math.random() * others.length)];
         p.x = dest.x;
         p.y = dest.y;
-        p.holeCooldownUntilTick = tick + 5; // premor, da lahko odide, preden spet lahko teleportira
+        p.holeCooldownUntilTick = tick + 100; // premor, da lahko odide, preden spet lahko teleportira
         events.push({ type: 'teleported', id: p.id, x: p.x, y: p.y });
       }
     }
@@ -299,7 +299,7 @@ function resolveTick(movesAllowedMap) {
       const onTrap = map.tileAt(p.x, p.y) === map.TILE.beartrap;
       const cooldownActive = p.trapCooldownUntilTick && p.trapCooldownUntilTick > tick;
       if (onTrap && !cooldownActive) {
-        p.stuckUntilTick = tick + 75
+        p.stuckUntilTick = tick + 15
         p.trapCooldownUntilTick = tick + 5 + 10; // 5 tickov ujetosti + 10 tickov premora
         events.push({ type: 'trapped', id: p.id, until: p.stuckUntilTick });
       }
