@@ -161,7 +161,9 @@ function shortId(id) {
 window.addEventListener('keydown', (e) => {
   const move = KEY_TO_MOVE[e.key];
   if (!move) return;
-  e.preventDefault();
+  if (document.activeElement && document.activeElement.className.indexOf("noPreventKeys") != -1) {
+    e.preventDefault();
+  }
   // keep the queue small so input doesn't pile up across many ticks
   if (moveQueue.length < 2) moveQueue.push(move);
 });
