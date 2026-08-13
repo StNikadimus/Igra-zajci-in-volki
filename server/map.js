@@ -56,6 +56,7 @@ const RAW_MAP = [
   '33333333333333333333333333333333333333333333333',
 ];
 
+
 function parseMap(rows) {
   return rows.map((row) => row.split('').map((ch) => parseInt(ch, 10)));
 }
