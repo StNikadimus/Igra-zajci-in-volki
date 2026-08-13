@@ -13,8 +13,8 @@ const MAX_ENERGY = 400;
 const EAT_GAIN = 200;
 const ENERGY_DECAY_PER_TICK = 1;
 const RESPAWN_DELAY_TICKS = 50;
-const CLOVER_RESPAWN_TICKS = 300;
-const WOLF_DOUBLE_MOVE_EVERY = 30;
+const CLOVER_RESPAWN_TICKS = 200;
+const WOLF_DOUBLE_MOVE_EVERY = 3;
 const WOLF_TO_RABBIT_TARGET_RATIO = 1 / 3; // ~1 wolf per 3 rabbits
 
 const DIRS = {
