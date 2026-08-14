@@ -95,7 +95,7 @@ def izris(frame):
         #textRe.center = (j['x']*20 // 2, j['y']*20-20 // 2)
         t=font.render(j['displayName'],True,(47, 82, 84)); canvas.blit(t,t.get_rect(center=((j['x']*20)+5,((j['y']*20)+5)-20)))
         #canvas.blit(textSufaceObj,textRe, 20, 20)
-    t=font.render(welc['kind'],True,(47, 82, 84)); canvas.blit(t,t.get_rect(center=(15,7)))
+    #t=font.render(welc['kind'],True,(47, 82, 84)); canvas.blit(t,t.get_rect(center=(15,7)))
     pygame.display.flip()
 
 def send_data():
