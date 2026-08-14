@@ -218,7 +218,7 @@ function render(msg) {
       ctx.stroke();
     }
 
-    // energy pip
+        // energy pip
     ctx.fillStyle = 'rgba(255,255,255,0.9)';
     ctx.font = `${Math.floor(tileSize * 1.75)}px sans-serif`;
     ctx.textAlign = 'center';

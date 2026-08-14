@@ -194,8 +194,8 @@ class Room {
         }
       }
 
-      // rabbit hole teleport
-      for (const p of living()) {
+// rabbit hole teleport (samo za zajce)
+      for (const p of living().filter((p) => p.kind === 'rabbit')) {
         const onHole = this.rabbitHoles.some((h) => h.x === p.x && h.y === p.y);
         const cooldownActive = p.holeCooldownUntilTick && p.holeCooldownUntilTick > this.tick;
         if (onHole && !cooldownActive) {
@@ -300,10 +300,11 @@ function getOrCreateRoom(mapName) {
   return rooms.get(validMap);
 }
 
-// Inicializiramo privzete sobe
-getOrCreateRoom('default');
-getOrCreateRoom('small');
-getOrCreateRoom('arena');
+// Inicializiramo VSE sobe vnaprej (za vsak zemljevid iz map.js),
+// da se med tickom nikoli ne doda nova soba "na sredi" (glej tickLoop).
+for (const mapName of Object.keys(mapModule.RAW_MAPS)) {
+  getOrCreateRoom(mapName);
+}
 
 // ---------------------------------------------------------------------------
 // WebSocket wiring
@@ -313,7 +314,7 @@ const wss = new WebSocket.Server({ host: "0.0.0.0", port: PORT });
 wss.on('connection', (ws) => {
   let player = null;
 
-  ws.on('message', (raw) => {
+  ws.on('message', (raw) => { 
     let msg;
     try {
       msg = JSON.parse(raw.toString());
@@ -403,6 +404,7 @@ async function tickLoop() {
     // 2. Faza: izvedi premike in obdelaj logiko za vsako sobo ločeno
     for (const room of rooms.values()) {
       const movesAllowedMap = roomMovesMap.get(room);
+      if (!movesAllowedMap) continue; // varnostna mreža, če bi se soba vseeno pojavila med tickom
       room.processTickPhase2(movesAllowedMap);
     }
 
